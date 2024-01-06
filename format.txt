@@ -1,0 +1,13 @@
+# Format :
+# Lignes commençant par '#' ou vides ignorées 
+# Le premier caractère de chaque règle commence par un r/R, et peut être complétée par un nom
+# suivie d'un ':' puis de prémisses séparées par des ',', suivies par un ';'
+# Chaque fait commence par un f/F qui peut être complété suivi d'un ':', et séparés par des virgules
+# Il ne doit pas y avoir d'espace entre un séparateur et ce qui précède
+# Il peut y avoir autant de règles que l'on souhaite, de même pour les faits
+
+Regle:          Premisse1.1, Premisse1.2; Conclusion1.1, Conclusion1.2
+R nom de regle: Premisse2.1, Premisse2.2; Conclusion2.1, Conclusion2.2
+r : Premisse3.1; Conclusion3.2
+Faits : Fait1, Fait2
+F : Fait3, Fait4

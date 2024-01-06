@@ -1,0 +1,185 @@
+// Question 1
+Fonction creeRegle() -> Regle
+    Début
+        r : Regle
+        creeRegle() <- r
+    Fin
+Fonction creeProposition(c : Chaine) -> Proposition
+    Début
+        p : Proposition
+        valeur(p) = c
+        suivant(p) = NULL
+        creeProposition(c) <- p
+    Fin
+Procédure ajouterProposition(bf : BF, p : Proposition)
+    Début
+        Si bf != UNDEF Alors
+            bf = creeBF()
+        FinSi
+
+        Si proposition(bf) = UNDEF Alors
+            proposition(bf) = p
+        Sinon
+            dernierep : proposition
+            dernierep = suivante(p)
+            TantQue suivante(dernierep) != UNDEF Alors
+                dernierep = suivante(dernierep)
+            FinTantQue
+            suivante(dernierep) = p
+        FinSi
+    Fin
+Procédure ajouterPremisse(r : Regle, c : Chaine)
+    Début
+        np : Proposition
+        np = creeProposition(c)
+
+        Si premisse(r) = UNDEF Alors
+            premisse(r) = np
+        Sinon
+            dernierep : proposition
+            dernierep = suivante(p)
+            TantQue suivante(dernierep) != UNDEF Alors
+                dernierep = suivante(dernierep)
+            FinTantQue
+            premisse(suivante(dernierep)) = np
+        FinSi
+        
+    Fin
+Procédure  ajouterConclusion(r: Regle, c: Chaine) 
+    Début
+        np : Proposition
+        np = creeProposition(c)
+
+        Si conclusion(r) = UNDEF Alors
+            conclusion(r) = np
+        Sinon
+            dernierep : proposition
+            dernierep = suivante(p)
+            TantQue suivante(dernierep) != UNDEF Alors
+                dernierep = suivante(dernierep)
+            FinTantQue
+            conclusion(suivante(dernierep)) = np
+        FinSi
+    Fin
+Fonction test_appartenance_premisse(r : Regle, c : Chaine) -> Bool
+    Début
+        p : Proposition
+        p = premisse(r)
+        Si p = UNDEF Alors
+            test_appartenance_premisse(r, c) <- Faux
+        Sinon
+            Si proposition(p) = c Alors
+                test_appartenance_premisse(r, c) <- Vrai
+            Sinon
+                test_appartenance_premisse(r, c) <- test_appartenance_premisse(suivante(p), c)
+            FinSi
+        FinSi
+    Fin
+Procédure suppressionPremisse(r : Regle, c : Chaine)
+    Début
+        p : Proposition
+        p = premisse(r)
+        Si proposition(p) = c Alors
+            premisse(r) = suivante(p)
+        Sinon
+            dernierep : Proposition
+            dernierep = p
+            p = suivante(p)
+            TantQue p != UNDEF ET proposition(p) != c Faire
+                dernierep = p
+                p = suivante(p)
+            FinTantQue
+            Si p != UNDEF Alors
+                suivante(dernierep) = suivante(p)
+            FinSi
+        FinSi
+    Fin
+Fonction test_premisses_vides(r : Regle) -> Bool
+    Début
+        p : Proposition
+        p = premisse(r)
+        Si p = UNDEF Alors
+            test_premisses_vides(r) <- Vrai
+        Sinon
+            test_premisses_vides(r) <- Faux
+        FinSi
+    Fin
+Fonction premiere_premisse(r : Regle) -> Proposition
+    Début
+        p : Proposition
+        p = premisse(r)
+        Si p = UNDEF Alors
+            premiere_premisse(r) <- UNDEF
+        Sinon
+            premiere_premisse(r) <- p
+        FinSi
+    Fin
+Fonction conclusion(r : Regle) -> Proposition
+    Début
+        p : Proposition
+        p = conclusion(r)
+        Si p = UNDEF Alors
+            conclusion(r) <- UNDEF
+        Sinon
+            conclusion(r) <- p
+        FinSi
+    Fin
+
+// Question 2
+Fonction creeBC() -> BC
+    Début
+        bc : BC
+        creeBC() <- bc
+    Fin
+Procédure ajouterRegle(bc : BC, r : Regle)
+    Début
+        Si regle(bc) = UNDEF Alors
+            regle(bc) = r
+        Sinon
+            dernierer : Regle
+            dernierer = regle(bc)
+            TantQue suivante(dernierer) != UNDEF Faire
+                dernierer = suivante(dernierer)
+            FinTantQue
+            suivante(dernierer) = r
+        FinSi
+    Fin
+Fonction tete(bc : BC) -> Regle
+    Début
+        r : Regle
+        r = regle(bc)
+        Si r = UNDEF Alors
+            tete(bc) <- UNDEF
+        Sinon
+            tete(bc) <- r
+        FinSi
+    Fin
+
+// Question 3
+Procédure moteurAvant(bc : BC, bf : BF)
+    Début
+        r : Regle
+        r = tete(bc)
+        f : Proposition
+        f = proposition(bf)
+        TantQue f != UNDEF Faire
+            TantQue r != UNDEF Faire
+                Si test_appartenance_premisse(r, f) Alors
+                    suppressionPremisse(r, f)
+                    Si test_premisses_vides(r) Alors
+                        ajouterProposition(bf, conclusion(r))
+                    FinSi
+                FinSi
+                r = suivante(r)
+            f = suivante(f)
+            FinTantQue
+        FinTantQue
+    Fin
+
+// Autres fonctions
+
+Fonction creeBF() -> BF
+    Début
+        bf : BF
+        creeBF() <- bf
+    Fin

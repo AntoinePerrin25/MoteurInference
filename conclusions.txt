@@ -1,0 +1,6 @@
+Base de faits:
+Fait1, Fait2, Fait3, Fait4
+Base de connaissances:
+R : Premisse1.1, Premisse1.2; Conclusion1.1, Conclusion1.2
+R : Premisse2.1, Premisse2.2; Conclusion2.1, Conclusion2.2
+R : Premisse3.1; Conclusion3.2

@@ -1,0 +1,6 @@
+R : A; C
+R : B; D
+R : E, D; F, G
+R : C; E
+R : G; J
+Fait : A, B
