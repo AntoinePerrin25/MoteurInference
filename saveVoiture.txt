@@ -1,0 +1,4 @@
+R :     Le Moteur ne s'allume plus, Le voyant moteur est allume; Il faut changer le moteur
+Regle 2 :     Le Moteur ne s'allume plus, Il n'y a plus d'essence; Il faut remplir le reservoir
+
+Fait :  Le voyant moteur est allume, Le Moteur ne s'allume plus, Il n'y a plus d'essence
